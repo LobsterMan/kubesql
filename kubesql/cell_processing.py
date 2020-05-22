@@ -30,3 +30,13 @@ def process_cell_str(data):
 
 def process_cell_json(data):
     return json.dumps(data)
+
+
+def get_cell_value(obj, cell_name):
+    cell_name_parts = cell_name.split(".")
+    cur_obj = obj.get(cell_name_parts[0])
+    if len(cell_name_parts) > 1 and cur_obj:
+        sub_level = ".".join(cell_name_parts[1:])
+        return get_cell_value(cur_obj, sub_level)
+    else:
+        return cur_obj

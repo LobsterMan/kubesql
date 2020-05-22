@@ -107,7 +107,8 @@ def process_row(row, columns):
 
     for col in columns:
         column_name = col["name"]
-        column_content = cp.process_cell(row.get(col["column"], None), col["func"], col["column"])
+        cell_value = cp.get_cell_value(row, col['column'])
+        column_content = cp.process_cell(cell_value, col["func"], col["column"])
         final_row[column_name] = column_content
 
     return final_row

@@ -61,7 +61,6 @@ __namespace__ - kubernetes namespace. If no namespace is selected, `--all-namesp
 Any valid kubernetes resource type
 
 ## TODO
-- SELECT sub columns (e.g. metadata.name)
 - SELECT lists (e.g. spec.pods[].image)
 - WHERE Conditions applied to data (other than namespace)
 - output type (csv or table)
