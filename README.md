@@ -26,8 +26,9 @@ Functions
 - Data based WHERE Conditions (other than namespace)
 - output type
 - Select lists (e.g. spec.pods[].image)
-- Select functions
+- Select functions json, yaml
 - refactor object oriented
+- limits
 
 
 ## Credits

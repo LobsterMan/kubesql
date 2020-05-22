@@ -8,6 +8,8 @@ import sys
 import pyparsing
 import pandas as pd
 from io import StringIO
+import kubesql.cell_processing as cp
+from kubesql.kubesql_exception import KubeSqlException
 
 
 def main():
@@ -97,36 +99,11 @@ def process_row(row, columns):
 
     for col in columns:
         column_name = col["name"]
-        column_content = process_cell(row.get(col["column"], None), col["func"], col["column"])
+        column_content = cp.process_cell(row.get(col["column"], None), col["func"], col["column"])
         final_row[column_name] = column_content
 
     return final_row
 
-
-def process_cell(data, func, col_name):
-    functions = {
-        "cell": process_cell_cell,
-        "str": process_cell_str
-    }
-
-    if func not in functions.keys():
-        raise KubeSqlException(f"Unknow function '{func}' for column '{col_name}'")
-
-    return functions[func](data)
-
-
-def process_cell_cell(data):
-    if isinstance(data, dict):
-        formatted_cell = "<dict>"
-    elif isinstance(data, list):
-        formatted_cell = "<list>"
-    else:
-        formatted_cell = str(data)
-    return formatted_cell
-
-
-def process_cell_str(data):
-    return str(data)
 
 
 def get_column_names(result, query):
@@ -188,7 +165,4 @@ def parse_value(value):
     else:
         return str(value)
 
-
-class KubeSqlException(Exception):
-    pass
 
