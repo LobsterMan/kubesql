@@ -1,0 +1,23 @@
+{
+  "items": [
+    {
+      "name": "first",
+      "list": [{"item": "test"}, {"item": "test_2"}],
+      "complex": {
+        "inner": [
+          {"inner_item": "test_4"}
+        ]
+      }
+    },
+    {
+      "name": "second",
+      "list": [{"item": "test_3"}],
+      "complex": {
+        "inner": [
+          {"inner_item": "test_5"},
+          {"inner_item": "test_6"}
+        ]
+      }
+    }
+  ]
+}

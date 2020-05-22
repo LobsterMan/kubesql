@@ -23,7 +23,10 @@ Basic query
 ```
 SELECT * from pods WHERE namespace = 'kube-system'
 ```
-Select specific columns
+Select nested columns
+```
+kubesql SELECT name, labels.`controller-revision-hash` as revision_hash from pods WHERE namespace = 'kube-system'
+```
 
 Functions
 
@@ -52,6 +55,8 @@ __str()__ - Returns the string representation of the cell
 
 __json()__ - returns the json representation of the cell
 
+__dict_keys()__ - returns a string representation of a dict's keys, for exploration
+
 #### condition
 Supported conditions are:
 
@@ -66,6 +71,7 @@ Any valid kubernetes resource type
 - output type (csv or table)
 - refactor object oriented
 - ORDER BY
+- Basic aggregation
 
 
 ## Credits
