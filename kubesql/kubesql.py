@@ -14,11 +14,8 @@ from kubesql.kubesql_exception import KubeSqlException
 
 def main():
     try:
-        sql = " ".join(sys.argv[1:])
-        result = query_kubernetes(sql)
-
-        # get results as DataFrame
-        result_df = pd.DataFrame(result)
+        args = parse_args()
+        result_df = query_kubernetes(args['sql'])
 
         # convert to csv
         fp = StringIO()
@@ -34,6 +31,10 @@ def main():
         print(str(f"SQL ERROR: {e}"))
 
 
+def parse_args():
+    sql = " ".join(sys.argv[1:])
+    return {'sql': sql}
+
 
 def query_kubernetes(sql):
     # sql = "select * from nodes where namespace = 'kubeflow'"
@@ -41,7 +42,7 @@ def query_kubernetes(sql):
     # parse query
     parsed_query = parse_query(sql)
 
-    # print(json.dumps(parsed_query)) # indent=4, separators=(',', ': ')
+    print(json.dumps(parsed_query, indent=4, separators=(',', ': ')))
 
     # get results from kubectl
     kubectl_result = get_kubectl_result(parsed_query)
@@ -49,7 +50,14 @@ def query_kubernetes(sql):
     # select columns
     results_selected_columns = select_columns(kubectl_result, parsed_query)
 
-    return results_selected_columns
+    if parsed_query['query'].get('limit'):
+        limit = parsed_query['query']['limit']
+        results_selected_columns = results_selected_columns[:limit]
+
+    # get results as DataFrame
+    result_df = pd.DataFrame(results_selected_columns)
+
+    return result_df
 
 
 def parse_query(sql):
@@ -103,7 +111,6 @@ def process_row(row, columns):
         final_row[column_name] = column_content
 
     return final_row
-
 
 
 def get_column_names(result, query):

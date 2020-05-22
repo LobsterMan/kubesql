@@ -23,12 +23,10 @@ Functions
 
 ## TODO
 - Select sub columns (e.g. metadata.name)
-- Data based WHERE Conditions (other than namespace)
-- output type
 - Select lists (e.g. spec.pods[].image)
-- Select functions json, yaml
+- Data based WHERE Conditions (other than namespace)
+- output type (csv or table)
 - refactor object oriented
-- limits
 
 
 ## Credits
