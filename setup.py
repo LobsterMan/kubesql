@@ -9,6 +9,8 @@ version = re.search(
     ).group(1)
 
 
+with open('requirements.txt', 'r') as f:
+    requires = f.readlines()
 
 
 setup(
@@ -23,4 +25,5 @@ setup(
     author = "Reuven Kaplan",
     author_email = "rkaplan18 at google's email service",
     url = "",
-    )
+    install_requires=requires,
+)

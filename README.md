@@ -4,7 +4,7 @@ Query kubernetes clusters using SQL
 ## Usage
 Install locally
 ```
-python setup.py install
+pip install -e .
 ```
 
 Basic Usage
